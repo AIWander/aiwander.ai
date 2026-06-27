@@ -212,7 +212,13 @@ h1 {
   text-transform: uppercase;
   letter-spacing: .08em;
   margin-bottom: 12px;
-}
+  }
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  }
+.actions .button { flex: 1 1 150px; }
 .cmd {
   display: flex;
   align-items: stretch;
@@ -396,30 +402,36 @@ footer a { color: var(--muted); }
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Install</div>
-        <h2>Use verified AIWander links.</h2>
-        <p>The page only lists links that resolve publicly. Voice has a PowerShell installer. Hands and Programmer are linked to release assets until their repo-level installers are published.</p>
+        <h2>Use one install pattern.</h2>
+        <p>Each tool links to its latest Windows x64 release and its source repo. Download the binaries, place them under the same install folder, then add the config block below.</p>
       </div>
       <div class="grid">
         <article class="card">
-          <div class="meta">PowerShell</div>
+          <div class="meta">Windows x64</div>
           <h3>Voice-Command</h3>
-          <p>Run the public install script from the AIWander repo.</p>
-          <div class="cmd">
-            <code id="cmd-voice">irm https://raw.githubusercontent.com/AIWander/Voice-Command/main/install.ps1 | iex</code>
-            <button class="copy" data-copy="cmd-voice">Copy</button>
+          <p>Download the voice MCP binary for local speech input and output.</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/AIWander/Voice-Command/releases/latest/download/voice-mcp-x64.exe">Download exe</a>
+            <a class="button" href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">Open repo</a>
           </div>
         </article>
         <article class="card">
-          <div class="meta">Release asset</div>
+          <div class="meta">Windows x64</div>
           <h3>AI-Hands</h3>
-          <p>Download the latest Windows x64 executable from GitHub Releases.</p>
-          <a class="button primary" href="https://github.com/AIWander/AI-Hands/releases/latest/download/hands-v1.0.1-x64.exe">Download hands.exe</a>
+          <p>Download the browser, desktop UI, screenshot, vision, and OCR MCP binary.</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/AIWander/AI-Hands/releases/latest/download/hands-v1.0.1-x64.exe">Download exe</a>
+            <a class="button" href="https://github.com/AIWander/AI-Hands" target="_blank" rel="noopener">Open repo</a>
+          </div>
         </article>
         <article class="card">
-          <div class="meta">Release asset</div>
+          <div class="meta">Windows x64</div>
           <h3>Programmer-Wander</h3>
-          <p>Download the latest Windows x64 zip from GitHub Releases.</p>
-          <a class="button primary" href="https://github.com/AIWander/Programmer-Wander/releases/latest/download/programmer-wander-windows-x64.zip">Download zip</a>
+          <p>Download the local development MCP package for files, shell, git, and HTTP work.</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/AIWander/Programmer-Wander/releases/latest/download/programmer-wander-windows-x64.zip">Download zip</a>
+            <a class="button" href="https://github.com/AIWander/Programmer-Wander" target="_blank" rel="noopener">Open repo</a>
+          </div>
         </article>
         <article class="card wide">
           <div class="meta">Grok Build config example</div>
