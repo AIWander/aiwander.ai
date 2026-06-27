@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIWander</title>
+<style>
+:root{
+  --bg:#0f1117;
+  --panel:#1a1d27;
+  --rule:#2a2e3a;
+  --fg:#e6e8ee;
+  --dim:#9aa0ad;
+  --accent:#22c55e;
+  --cyan:#5eead4;
+  --amber:#fbbf24;
+  --term:#090b11;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  min-height:100svh;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at top,rgba(34,197,94,.08),transparent 34%),
+    linear-gradient(180deg,rgba(255,255,255,.02),transparent 28%),
+    var(--bg);
+  color:var(--fg);
+  font:400 16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+}
+a{color:inherit;text-decoration:none}
+.shell{
+  width:min(760px,100%);
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)),var(--panel);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  padding:18px;
+  box-shadow:0 28px 80px rgba(0,0,0,.32);
+}
+.bar,.actions,.footer{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:700;letter-spacing:.02em}
+.links,.speed{display:flex;gap:8px;flex-wrap:wrap}
+.chip-link,.speed button,.restart{
+  border:1px solid var(--rule);
+  border-radius:999px;
+  background:rgba(255,255,255,.02);
+  color:var(--dim);
+  padding:8px 12px;
+  transition:border-color .18s ease,background .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.chip-link:hover,.speed button:hover,.restart:hover{
+  color:var(--fg);
+  border-color:rgba(34,197,94,.45);
+  background:rgba(34,197,94,.08);
+  transform:translateY(-1px);
+}
+.title{
+  margin:18px 0 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font:600 clamp(22px,3.3vw,30px)/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.cursor{
+  width:.62em;
+  height:1.05em;
+  border-radius:2px;
+  background:var(--accent);
+  box-shadow:0 0 14px rgba(34,197,94,.45);
+  animation:blink 1s step-end infinite;
+}
+.terminal{
+  position:relative;
+  height:min(520px,calc(100svh - 260px));
+  min-height:330px;
+  padding:14px 16px 16px;
+  border:1px solid var(--rule);
+  border-radius:10px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0) 16%),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    var(--term);
+  background-size:auto,auto 3px,auto;
+  overflow:hidden;
+}
+.terminal::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(34,197,94,.06),transparent 18%,transparent 82%,rgba(34,197,94,.04));
+}
+.terminal-top{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  color:var(--dim);
+  font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.lights{display:flex;gap:6px}
+.lights i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--rule);
+}
+.lights i:first-child{background:#ef4444}
+.lights i:nth-child(2){background:#f59e0b}
+.lights i:last-child{background:var(--accent)}
+.log{
+  position:relative;
+  z-index:1;
+  height:calc(100% - 28px);
+  overflow:auto;
+  padding-right:4px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--rule) transparent;
+}
+.log::-webkit-scrollbar{width:8px}
+.log::-webkit-scrollbar-thumb{background:var(--rule);border-radius:999px}
+.line{
+  margin:0 0 8px;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font:500 15px/1.52 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  opacity:0;
+  transform:translateY(5px);
+  animation:land .18s ease forwards;
+}
+.role-actor,.role-user,.role-system{color:var(--fg)}
+.role-tool_call{color:var(--cyan)}
+.role-tool_result{color:var(--dim)}
+.role-critic{color:var(--amber)}
+.role-graduate{color:var(--accent);font-weight:700}
+.pills{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:14px 0;
+}
+.pill{
+  flex:1 1 180px;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border:1px solid var(--rule);
+  border-radius:999px;
+  background:rgba(255,255,255,.02);
+  transition:border-color .2s ease,background .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.pill:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.14)}
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex:0 0 auto;
+  box-shadow:0 0 12px currentColor;
+}
+.dot.actor{color:var(--accent);background:var(--accent)}
+.dot.critic{color:var(--amber);background:var(--amber)}
+.dot.tools{color:var(--cyan);background:var(--cyan)}
+.pill-copy{min-width:0}
+.pill-copy strong,.pill-copy span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill-copy strong{font-size:12px;letter-spacing:.14em;color:var(--dim)}
+.pill-copy span{font-size:15px;color:var(--fg)}
+.pill.is-speaking,.pill.is-bumping{
+  border-color:rgba(34,197,94,.6);
+  background:rgba(34,197,94,.08);
+  box-shadow:0 0 0 3px rgba(34,197,94,.08),0 12px 28px rgba(34,197,94,.12);
+}
+.restart{
+  color:var(--fg);
+  background:rgba(34,197,94,.12);
+  border-color:rgba(34,197,94,.32);
+  font-weight:600;
+}
+.restart.ready{
+  animation:ready 1.1s ease-in-out infinite;
+  box-shadow:0 0 0 4px rgba(34,197,94,.1),0 0 24px rgba(34,197,94,.18);
+}
+.speed button{cursor:pointer}
+.speed button.active{
+  color:var(--fg);
+  border-color:rgba(34,197,94,.48);
+  background:rgba(34,197,94,.14);
+}
+.footer{
+  margin-top:4px;
+  color:var(--dim);
+  font-size:14px;
+}
+.footer a:hover{color:var(--fg)}
+button{font:inherit;cursor:pointer}
+@keyframes blink{50%{opacity:0}}
+@keyframes land{to{opacity:1;transform:none}}
+@keyframes ready{
+  0%,100%{transform:none}
+  50%{transform:translateY(-1px) scale(1.01)}
+}
+@media (max-width:640px){
+  body{padding:16px}
+  .shell{padding:16px}
+  .title{margin:16px 0 12px}
+  .terminal{
+    min-height:300px;
+    height:min(460px,calc(100svh - 250px));
+    padding:12px 13px 14px;
+  }
+  .line{font-size:14px}
+  .bar,.actions,.footer{align-items:flex-start;flex-direction:column}
+  .links,.speed{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .cursor,.line,.restart.ready{animation:none}
+  .chip-link,.speed button,.restart,.pill{transition:none}
+}
+</style>
+</head>
+<body>
+  <main class="shell">
+    <div class="bar">
+      <div class="brand">AIWander</div>
+      <nav class="links" aria-label="Primary">
+        <a class="chip-link" href="/">/</a>
+        <a class="chip-link" href="https://github.com/AIWander/AMDHack">GitHub</a>
+      </nav>
+    </div>
+    <div class="title">
+      <span>&gt; The agent earns its own tools.</span>
+      <span class="cursor" aria-hidden="true"></span>
+    </div>
+    <section class="terminal" aria-label="AIWander terminal demo">
+      <div class="terminal-top">
+        <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div>session://aiwander/demo</div>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+    </section>
+    <div class="pills">
+      <div class="pill" data-pill="actor">
+        <span class="dot actor" aria-hidden="true"></span>
+        <div class="pill-copy">
+          <strong>ACTOR</strong>
+          <span>gpt-oss-120B</span>
+        </div>
+      </div>
+      <div class="pill" data-pill="critic">
+        <span class="dot critic" aria-hidden="true"></span>
+        <div class="pill-copy">
+          <strong>CRITIC</strong>
+          <span>Qwen3.6-35B</span>
+        </div>
+      </div>
+      <div class="pill" data-pill="tools">
+        <span class="dot tools" aria-hidden="true"></span>
+        <div class="pill-copy">
+          <strong>TOOLS</strong>
+          <span><b id="tools-count">0</b> captured</span>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="restart" id="restart" type="button">Restart</button>
+      <div class="speed" aria-label="Playback speed">
+        <button type="button" data-speed="1" class="active" aria-pressed="true">1x</button>
+        <button type="button" data-speed="2" aria-pressed="false">2x</button>
+        <button type="button" data-speed="4" aria-pressed="false">4x</button>
+      </div>
+    </div>
+    <div class="footer">
+      <a href="/">Back to /</a>
+    </div>
+  </main>
+<script>
+const scriptLines=[
+  {role:"system",text:"[system]   AIWander harness up. Actor: gpt-oss-120B. Critic: Qwen3.6-35B-A3B (256K ctx)."},
+  {role:"user",text:"[user]     Find the latest SpaceX launch and tell me when it lifted off."},
+  {role:"actor",text:"[actor]    I have browser tools and a capture pipeline. Let me start by navigating.",pill:"actor"},
+  {role:"tool_call",text:'[tool_call] browser_navigate(url="https://www.spacex.com/launches")'},
+  {role:"tool_result",text:'[tool_result] {"status":"ok","title":"SpaceX Launches"}'},
+  {role:"actor",text:"[actor]    The page is JS-rendered. Let me inspect the network log for the data API.",pill:"actor"},
+  {role:"tool_call",text:"[tool_call] browser_get_network_log()"},
+  {role:"tool_result",text:'[tool_result] {"requests":[{"url":"https://api.spacexdata.com/v4/launches/latest","status":200,"bytes":1842}]}'},
+  {role:"actor",text:"[actor]    Found it. Capturing this endpoint so it becomes a reusable tool.",pill:"actor"},
+  {role:"tool_call",text:'[tool_call] workflow:api_store(name="spacex_latest_launch", method="GET", url_pattern="https://api.spacexdata.com/v4/launches/latest")'},
+  {role:"tool_result",text:'[tool_result] {"stored":true,"runs":0}'},
+  {role:"actor",text:"[actor]    Now graduating it to a standalone MCP server on GitHub.",pill:"actor"},
+  {role:"tool_call",text:'[tool_call] workflow:api_graduate(name="spacex_latest_launch")'},
+  {role:"tool_result",text:'[tool_result] {"repo":"github.com/AIWander/mcp-spacex-latest-launch","binary":"target/release/mcp-spacex-latest-launch","tool_smoke_passed":true}'},
+  {role:"graduate",text:"[graduate] Published 12s ago: github.com/AIWander/mcp-spacex-latest-launch"},
+  {role:"actor",text:"[actor]    Calling the brand-new tool.",pill:"actor"},
+  {role:"tool_call",text:"[tool_call] spacex_latest_launch__get()"},
+  {role:"tool_result",text:'[tool_result] {"name":"Starlink 12-8","date_utc":"2026-05-09T18:23:00Z","success":true}'},
+  {role:"actor",text:"[actor]    Done. Starlink 12-8 lifted off on May 9, 2026 at 18:23 UTC.",pill:"actor"},
+  {role:"critic",text:'[critic]   Verifying. User asked "when". Answer includes date and time UTC. PASS.',pill:"critic"},
+  {role:"system",text:"[system]   Run complete. 4 tool calls. 1 new MCP server. 1 critic check. Verify: PASS."}
+];
+
+const log=document.getElementById("log");
+const restart=document.getElementById("restart");
+const toolsCount=document.getElementById("tools-count");
+const speedButtons=[...document.querySelectorAll("[data-speed]")];
+const pills={
+  actor:document.querySelector('[data-pill="actor"]'),
+  critic:document.querySelector('[data-pill="critic"]'),
+  tools:document.querySelector('[data-pill="tools"]')
+};
+const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const speeds={1:14,2:7,4:3};
+const state={speed:1,toolCalls:0,runToken:0,timers:[],frame:0};
+
+function clearWork(){
+  state.runToken+=1;
+  state.timers.forEach(clearTimeout);
+  state.timers.length=0;
+  if(state.frame)cancelAnimationFrame(state.frame);
+  state.frame=0;
+}
+
+function wait(ms,token){
+  return new Promise(resolve=>{
+    const id=setTimeout(()=>resolve(token===state.runToken),ms);
+    state.timers.push(id);
+  });
+}
+
+function nextCharDelay(){
+  const base=speeds[state.speed];
+  return Math.max(3,base+Math.round((Math.random()-.5)*6));
+}
+
+function pause(ms){
+  return Math.max(45,Math.round(ms/state.speed));
+}
+
+function scrollLog(){
+  log.scrollTop=log.scrollHeight;
+}
+
+function bumpPill(name){
+  const pill=pills[name];
+  if(!pill)return;
+  pill.classList.remove("is-speaking","is-bumping");
+  pill.offsetHeight;
+  pill.classList.add(name==="tools"?"is-bumping":"is-speaking");
+  const id=setTimeout(()=>pill.classList.remove("is-speaking","is-bumping"),reduced?140:Math.max(220,520/state.speed));
+  state.timers.push(id);
+}
+
+function animateTools(to,token){
+  const from=Number(toolsCount.textContent)||0;
+  const start=performance.now();
+  const duration=reduced?0:180;
+  function frame(now){
+    if(token!==state.runToken)return;
+    const t=duration?Math.min(1,(now-start)/duration):1;
+    const eased=1-Math.pow(1-t,3);
+    toolsCount.textContent=String(Math.round(from+(to-from)*eased));
+    if(t<1){state.frame=requestAnimationFrame(frame);}
+  }
+  state.frame=requestAnimationFrame(frame);
+}
+
+function setSpeed(value){
+  state.speed=Number(value);
+  speedButtons.forEach(button=>{
+    const active=Number(button.dataset.speed)===state.speed;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
+  });
+}
+
+function resetDemo(){
+  clearWork();
+  log.innerHTML="";
+  state.toolCalls=0;
+  toolsCount.textContent="0";
+  restart.classList.remove("ready");
+  Object.values(pills).forEach(pill=>pill.classList.remove("is-speaking","is-bumping"));
+}
+
+function typeLine(node,text,token){
+  if(reduced){
+    node.textContent=text;
+    scrollLog();
+    return Promise.resolve(token===state.runToken);
+  }
+  return new Promise(resolve=>{
+    let index=0;
+    function step(){
+      if(token!==state.runToken){resolve(false);return;}
+      node.textContent+=text.charAt(index);
+      index+=1;
+      scrollLog();
+      if(index<text.length){
+        const id=setTimeout(step,nextCharDelay());
+        state.timers.push(id);
+      }else{
+        resolve(true);
+      }
+    }
+    const id=setTimeout(step,Math.max(3,nextCharDelay()-2));
+    state.timers.push(id);
+  });
+}
+
+async function runDemo(){
+  resetDemo();
+  const token=state.runToken;
+  for(const entry of scriptLines){
+    if(token!==state.runToken)return;
+    const line=document.createElement("p");
+    line.className=`line role-${entry.role}`;
+    log.appendChild(line);
+    if(entry.pill)bumpPill(entry.pill);
+    if(entry.role==="tool_call"){
+      state.toolCalls+=1;
+      bumpPill("tools");
+      animateTools(state.toolCalls,token);
+    }
+    const typed=await typeLine(line,entry.text,token);
+    if(!typed)return;
+    if(entry.role==="system"&&entry.text.includes("Run complete")){
+      restart.classList.add("ready");
+    }
+    const held=await wait(reduced?pause(120):pause(entry.role==="tool_result"?240:300),token);
+    if(!held)return;
+  }
+}
+
+restart.addEventListener("click",runDemo);
+speedButtons.forEach(button=>button.addEventListener("click",()=>setSpeed(button.dataset.speed)));
+setSpeed(1);
+runDemo();
+</script>
+</body>
+</html>

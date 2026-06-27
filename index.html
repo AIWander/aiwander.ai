@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIWander &mdash; An agent that earns its own tools</title>
+<meta name="description" content="A Rust agent harness on AMD MI300X. Two open-weight models co-resident. Captures live APIs, graduates them to standalone MCP servers on GitHub. Built from a chat window over eight days.">
+<meta property="og:title" content="AIWander &mdash; An agent that earns its own tools">
+<meta property="og:description" content="Rust agent harness on AMD MI300X. Two open-weight models co-resident. Captures APIs and graduates them to standalone MCP servers on GitHub.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aiwander.ai">
+<style>:root{--bg:#0f1117;--bg-2:#1a1d27;--bg-3:#232634;--fg:#e6e8ee;--fg-dim:#9aa0ad;--fg-faint:#6b7280;--accent:#22c55e;--accent-soft:rgba(34,197,94,0.12);--accent-border:rgba(34,197,94,0.35);--rule:#2a2e3a}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:56px 24px 96px}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--fg-dim);margin-bottom:64px}
+.topbar a{color:var(--fg-dim);text-decoration:none;margin-left:18px}
+.topbar a:hover{color:var(--accent)}
+.brand{font-weight:600;color:var(--fg);letter-spacing:.5px}
+.brand-mark{color:var(--accent)}
+h1.hero{font-size:42px;font-weight:600;line-height:1.15;margin:0 0 18px;letter-spacing:-.01em}
+.hero-sub{font-size:18px;color:var(--fg-dim);margin:0 0 8px;max-width:620px}
+.hero-meta{font-size:13px;color:var(--fg-faint);margin:0 0 36px;text-transform:uppercase;letter-spacing:.08em}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--rule);color:var(--fg);transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.btn-primary{background:var(--accent-soft);border-color:var(--accent-border);color:var(--accent)}
+.btn-primary:hover{background:var(--accent);color:#0a0c12}
+.section-label{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin:64px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+article h2{font-size:24px;font-weight:600;margin:40px 0 14px;letter-spacing:-.005em}
+article p{margin:0 0 18px}
+article strong{color:#fff;font-weight:600}article em{color:#c9cdd6}
+article code{background:var(--bg-2);border:1px solid var(--rule);padding:2px 6px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+article a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+article a:hover{border-bottom-color:var(--accent)}
+.chat-grid{display:grid;gap:14px;margin-top:4px}
+.chat-card{display:block;padding:18px 20px;background:var(--bg-2);border:1px solid var(--rule);border-radius:10px;text-decoration:none;color:var(--fg);transition:border-color .15s,background .15s,transform .15s}
+.chat-card:hover{border-color:var(--accent-border);background:var(--bg-3);transform:translateX(2px)}
+.chat-label{font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.1em;margin-bottom:6px}
+.chat-title{font-size:16px;font-weight:500;margin-bottom:6px}
+.chat-blurb{font-size:14px;color:var(--fg-dim);line-height:1.55;margin-bottom:10px}
+.chat-cta{font-size:12px;color:var(--fg-faint)}
+.footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--rule);font-size:13px;color:var(--fg-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer a{color:var(--fg-dim);text-decoration:none}.footer a:hover{color:var(--accent)}
+@media(max-width:600px){.wrap{padding:32px 18px 64px}h1.hero{font-size:32px}.topbar a{margin-left:12px}}</style>
+</head>
+<body>
+<div class="wrap">
+<div class="topbar"><span class="brand">AI<span class="brand-mark">Wander</span></span><nav><a href="https://github.com/AIWander/AMDHack" target="_blank" rel="noopener">GitHub</a><a href="https://aiwander.ngrok.app" target="_blank" rel="noopener">Live demo</a><a href="/grok-mcp-suite/">Grok suite</a><a href="/wander.html">Watch</a></nav></div>
+<h1 class="hero">An agent that earns its own tools.</h1>
+<p class="hero-sub">A Rust agent harness on a single AMD MI300X. Two open-weight models running co-resident &mdash; gpt-oss-120B as the actor, Qwen3.6-35B-A3B as the critic with 256K context. Walks into any site, captures the API, graduates to a standalone Rust MCP server published to GitHub. Closed-loop verify+retry. Fully open.</p>
+<p class="hero-meta">AMD Developer Hackathon &middot; lablab.ai &middot; May 2026</p>
+<div class="hero-actions"><a class="btn btn-primary" href="https://github.com/AIWander/AMDHack" target="_blank" rel="noopener">View source on GitHub &rarr;</a><a class="btn" href="https://aiwander.ngrok.app" target="_blank" rel="noopener">Live demo</a><a class="btn" href="/grok-mcp-suite/">Grok suite</a><a class="btn" href="/wander.html">Watch the loop</a></div>
+<div class="section-label">The story</div>
+<article><p>I&rsquo;m not a programmer. The Rust agent harness running on AMD MI300X for our submission was built without me opening an IDE or writing a single line of Rust. Eight days of work, all from a Claude.ai chat tab on a Windows machine. Here&rsquo;s how the workflow actually runs.</p>
+<h2>Three layers</h2>
+<p><strong>Layer 1 — chat.</strong> I describe what I want. The chat (currently Claude Opus 4.7) thinks alongside me, asks clarifying questions, names the architectural decisions, and condenses what I said into focused implementation prompts.</p>
+<p><strong>Layer 2 — Manager MCP.</strong> A server I run locally that lets the chat delegate work to other AI agents. The chat calls <code>manager:session_start</code> with a task description, working directory, and effort level. Manager spawns a Claude Code process in the background, hands it the task, returns a session ID. The chat keeps responding to me while the code agent grinds. A Windows toast fires when it&rsquo;s done.</p>
+<p><strong>Layer 3 — Claude Code, on my machine or via SSH on the AMD droplet.</strong> Reads files, writes files, runs <code>cargo build</code>, edits configs, restarts tmux sessions, smoke-tests endpoints, commits to git. Reports back with files changed and test results when the work is done.</p>
+<p>The chat is the architect. The code agent is the contractor. I&rsquo;m the homeowner.</p>
+<h2>A typical hour</h2>
+<p>Yesterday afternoon I wanted closed-loop verify+retry on the agent: when an operation finishes with a stated success signal, a critic model audits the result. If the result doesn&rsquo;t satisfy the signal, the system dispatches one corrective retry with an intelligent hint and escalates if a second attempt fails. Two models, four new HTTP endpoints, around 200 lines of Rust across five files.</p>
+<p>I described requirements in chat. The chat condensed them into a 60-line prompt with constraints, archive-first instructions, and smoke tests. Fired <code>manager:session_start</code> with <code>effort=high</code>. I made coffee. Claude Code edited <code>agent.rs</code>, <code>critic.rs</code>, <code>serve.rs</code>, <code>config.rs</code>, <code>run.rs</code>. Cargo-built. Restarted the driver tmux session. Smoke-tested all four endpoints. Reported back 30 minutes later.</p>
+<p>Then we tested live: prompt <em>&ldquo;what is 2+2, spell it as a word&rdquo;</em> with <code>success_signal: "reply contains the digit 4"</code>. The agent replied <strong>&ldquo;Four.&rdquo;</strong> Critic verdict came back <strong>fail</strong> — reasoning <em>&ldquo;contains the word &lsquo;Four&rsquo; but lacks the digit &lsquo;4&rsquo;&rdquo;</em>, corrective hint <em>&ldquo;instruct the model to output the digit instead of spelling out the word.&rdquo;</em> A retry dispatched automatically. The retry came back <strong>&ldquo;4&rdquo;</strong>. Verification pass.</p>
+<p>That JSONL trace — actual events from a real run — is in the <code>AIWander/AMDHack</code> repo as proof. The architecture I described in chat became running code that catches semantic mismatches and corrects itself. Without me touching the keyboard except to type messages.</p>
+<h2>Surviving compactions</h2>
+<p>Chat hits its memory limit and compacts. Half the context disappears. This would be catastrophic if I didn&rsquo;t have a layer beneath it: a CPC ecosystem with three patterns that mattered.</p>
+<p><strong>Volumes</strong> — Google-Drive-synced markdown files organized by topic. Project state lives in <code>projectstate/aiwander.md</code>. Detailed handoffs go in <code>handoffs/2026-05-10/&lt;timestamp&gt;_&lt;topic&gt;.md</code>. Append-only, NAV-indexed. After a compaction, the next message reads these and reconstructs.</p>
+<p><strong>Project Loaf</strong> — structured JSON tracking phases, decisions, and discoveries. Chat updates it as work progresses. Cross-session recovery anchor.</p>
+<p><strong>Breadcrumbs</strong> — multi-step operations in flight. If chat crashes mid-build, the next session picks up at step N+1.</p>
+<p>These aren&rsquo;t novel — they&rsquo;re CPC patterns I built up over months. The point is they existed before AIWander, and that&rsquo;s what made AIWander viable from a chat window.</p>
+<h2>When delegation works and when it doesn&rsquo;t</h2>
+<p>Manager-delegated Claude Code is excellent for focused implementation tasks (5-500 lines), 20-60 minute sustained-focus work units, repetitive operations like build-test-restart loops, and anything I can describe precisely.</p>
+<p>It&rsquo;s bad at ambiguous architectural decisions, picking between equally valid approaches, and knowing when to stop. If the prompt isn&rsquo;t tight, the session wanders. A few times this week, sessions came back saying <em>&ldquo;I noticed your prompt was unclear about X — made assumption Y, here&rsquo;s what I built.&rdquo;</em> Sometimes Y was right. Sometimes I had to redo the work. Signal-to-noise is high but not perfect.</p>
+<h2>Why the MI300X mattered</h2>
+<p>192 GB of HBM3 on a single chip. That&rsquo;s not a benchmark number — it&rsquo;s the difference between <em>actor and critic on one GPU</em> and <em>actor here, critic there, network hop between them.</em></p>
+<p>Both reasoning models run co-resident: gpt-oss-120B as the actor (70 GB weights + 15 GB KV cache) plus Qwen3.6-35B-A3B at q8_0 with 256K context as the critic (36 GB weights + 2 GB KV cache). Plus driver and Next.js overhead. Roughly 111 GB used, 81 GB free. NVIDIA&rsquo;s biggest single consumer GPU tops at 80 GB. The two-model architecture wouldn&rsquo;t fit.</p>
+<p>Vendors like to quote compute throughput. I had a workflow that needed memory in one address space. The MI300X disappeared as a constraint and let me build the architecture I actually wanted.</p>
+<h2>The repo</h2>
+<p><a href="https://github.com/AIWander/AMDHack"><code>github.com/AIWander/AMDHack</code></a> — public, four submodules (driver, aiwander-app, hands, workflow), live JSONL traces, full architecture and deployment docs.</p>
+<p>This essay was written from the same chat window that built the harness. Submission to lablab on Sunday. Ready or not.</p></article>
+<div class="section-label">The build &mdash; nine chats, nine days</div>
+<div class="chat-grid">
+<a class="chat-card" href="https://claude.ai/chat/b8ccd4fc-c636-4fa3-99d5-53120f474603" target="_blank" rel="noopener"><div class="chat-label">DAY 1 / MAY 5</div><div class="chat-title">Lablab AMD walkthrough</div><div class="chat-blurb">Origin chat. Joe and Claude scope the hackathon, decide on a Rust agent harness, sketch the project structure.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/d9a17156-d9dc-4a70-8651-40f520213d31" target="_blank" rel="noopener"><div class="chat-label">DAY 2 / MAY 6</div><div class="chat-title">Hands fork + bakeoff-driver scaffold</div><div class="chat-blurb">Reconcile the hands fork, branch for Linux port, ship the universal MCP-aware agent harness spec (551 lines). Delegate the first build.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/48666623-e59b-4d38-851a-c35ce539483c" target="_blank" rel="noopener"><div class="chat-label">DAY 2 / MAY 6 · LATE</div><div class="chat-title">Workflow + three-layer MCP architecture</div><div class="chat-blurb">Live, Resident, Graduated. The capture-to-graduation pipeline gets its shape. Day 4/5 plan locked.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/3f9a43e3-769b-4466-9582-c367da7aaae9" target="_blank" rel="noopener"><div class="chat-label">DAY 3 / MAY 7</div><div class="chat-title">Multi-model vLLM bakeoff</div><div class="chat-blurb">Picking the model lineup. Tradeoffs between vLLM and llama.cpp on MI300X. Meta-discussion about delegation patterns.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/30e9d00d-c915-475d-b0b1-da382ff6ff21" target="_blank" rel="noopener"><div class="chat-label">DAY 4 / MAY 7</div><div class="chat-title">Day 5 production pivot setup</div><div class="chat-blurb">Three-layer workflow lands in production. mcpconfig serves multi-server. The graduation pipeline’s silent-failure modes get documented.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/abab22c7-550b-4dcc-a2eb-c5ae9e95fcfb" target="_blank" rel="noopener"><div class="chat-label">DAY 6 / MAY 9</div><div class="chat-title">Dashboard verification + host ops</div><div class="chat-blurb">End-to-end smoke through Vercel. The driver consolidation begins. Vercel-to-ngrok blocker gets identified.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/7b1d7bd2-4e68-4d2a-8542-9662fe5c0a6d" target="_blank" rel="noopener"><div class="chat-label">DAY 7 / MAY 9</div><div class="chat-title">Website showcase + Streamlit handoff</div><div class="chat-blurb">First pass at the marketing site. Streamlit alternative-frontend handoff written. Project state and stack story get crystallized.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/a04a5114-3696-406f-b17e-11a70e084b47" target="_blank" rel="noopener"><div class="chat-label">DAY 8 / MAY 10</div><div class="chat-title">Day-of pivot to discover→capture→graduate</div><div class="chat-blurb">Track G/H built. Real bugs found and fixed. The capture-graduate-deploy-use loop comes online.</div><div class="chat-cta">Open chat &rarr;</div></a>
+<a class="chat-card" href="https://claude.ai/chat/5744df1a-e5ee-4e32-8320-2a3e9592e319" target="_blank" rel="noopener"><div class="chat-label">SUBMISSION DAY / MAY 10</div><div class="chat-title">Actor + critic, GitHub auto-publish, demo prep</div><div class="chat-blurb">The architectural climax. Actor+critic pivot, AMDHack umbrella created, token tuning, closed-loop verify+retry verified, transcription-mode demo.</div><div class="chat-cta">Open chat &rarr;</div></a>
+</div>
+<div class="footer"><span>Built from a chat window. Apache 2.0 driver, MIT graduated tools.</span><span><a href="https://github.com/AIWander">github.com/AIWander</a></span></div>
+</div>
+</body>
+</html>
