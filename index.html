@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grok Build CLI Agent Suite | AIWander</title>
-<meta name="description" content="Voice, desktop/browser control, and a local dev shell for Grok Build CLI. MCP-native tools from AIWander: Voice-Command, AI-Hands, and Programmer-Wander.">
-<meta property="og:title" content="Grok Build CLI Agent Suite">
-<meta property="og:description" content="Give Grok Build CLI a local body: voice, desktop/browser hands, and a full dev shell. MCP-native, local-first, open source.">
+<title>AI-Hands for Grok Build CLI | AIWander</title>
+<meta name="description" content="AI-Hands gives Grok Build CLI local browser control, desktop UI automation, screenshots, vision, and OCR. Signed Windows setup from AIWander.">
+<meta property="og:title" content="AI-Hands for Grok Build CLI">
+<meta property="og:description" content="Give Grok Build CLI hands: browser control, desktop UI automation, screenshots, vision, and OCR through a local MCP server.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aiwander.ai/">
 <style>
@@ -333,11 +333,11 @@ footer a { color: var(--muted); }
   <div class="wrap nav-inner">
     <a class="brand" href="#top"><span class="brand-mark"></span> AIWander</a>
     <nav class="links" aria-label="Primary">
-      <a href="#suite">Suite</a>
+      <a href="#suite">Hands</a>
       <a href="#install">Install</a>
       <a href="#proof">Proof</a>
       <a href="#resources">Repos</a>
-      <a class="pill" href="#install">Get the tools</a>
+      <a class="pill" href="#install">Get AI-Hands</a>
     </nav>
   </div>
 </header>
@@ -346,22 +346,22 @@ footer a { color: var(--muted); }
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow">Grok Build CLI + local MCP tools</div>
-        <h1>Give Grok Build a local body.</h1>
-        <p class="subhead">Voice input/output, precise desktop and browser control, and a real dev shell. Three AIWander MCP servers turn Grok Build CLI from a coding chat into a hands-on local operator.</p>
+        <div class="eyebrow">Grok Build CLI + AI-Hands</div>
+        <h1>Give Grok Build hands.</h1>
+        <p class="subhead">AI-Hands gives Grok Build CLI a local MCP server for browser control, desktop UI automation, screenshots, vision, and OCR. Voice-Command and GrokCLI can layer on top, but the first install is Hands.</p>
         <div class="actions">
-          <a class="button primary" href="#install">Install the suite</a>
+          <a class="button primary" href="#install">Install AI-Hands</a>
           <a class="button" href="https://github.com/AIWander" target="_blank" rel="noopener">View AIWander repos</a>
         </div>
       </div>
       <div class="terminal" aria-label="Grok Build CLI preview">
         <div class="terminal-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span>grok-build + mcp</div>
         <div class="terminal-body">
-          <div><span class="prompt">grok&gt;</span> open the repo, inspect the page, fix the installer links, and verify the route</div>
-          <div class="comment">loading tools: voice, hands, programmer</div>
-          <div><span class="ok">voice</span> listens and speaks</div>
-          <div><span class="ok">hands</span> drives browser and desktop UI</div>
-          <div><span class="ok">programmer</span> reads files, runs shell, uses git</div>
+          <div><span class="prompt">grok&gt;</span> use AI-Hands to open the browser, inspect the page, and verify it visually</div>
+          <div class="comment">loading tool: ai-hands</div>
+          <div><span class="ok">browser</span> opens and navigates</div>
+          <div><span class="ok">desktop</span> clicks, types, and reads UI state</div>
+          <div><span class="ok">vision</span> checks screenshots and OCR</div>
           <div class="comment">local-first, MCP-native, open source</div>
         </div>
       </div>
@@ -371,28 +371,28 @@ footer a { color: var(--muted); }
   <section class="section" id="suite">
     <div class="wrap">
       <div class="section-head">
-        <div class="eyebrow">The suite</div>
-        <h2>Three tools, one operator loop.</h2>
-        <p>Each piece is useful alone. Together they let Grok hear a task, touch the local machine, and modify a codebase.</p>
+        <div class="eyebrow">Hands first</div>
+        <h2>The public surface is AI-Hands.</h2>
+        <p>Lead with the capability people can see immediately: Grok controlling a browser or desktop app, then verifying the result from screenshots and OCR.</p>
       </div>
       <div class="grid">
         <article class="card">
-          <div class="meta">Voice</div>
-          <h3>Voice-Command</h3>
-          <p>Local speech input and speech output for MCP clients. Use it for hands-free command, narration, and feedback loops.</p>
-          <a class="button" href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">Open repo</a>
-        </article>
-        <article class="card">
-          <div class="meta">Hands</div>
+          <div class="meta">Primary MCP server</div>
           <h3>AI-Hands</h3>
-          <p>Browser control, Windows UI automation, screenshots, vision, and OCR. It acts through the UI instead of guessing from text.</p>
+          <p>Browser control, Windows UI automation, screenshots, vision, and OCR. It lets Grok act through the interface and verify what happened.</p>
           <a class="button" href="https://github.com/AIWander/AI-Hands" target="_blank" rel="noopener">Open repo</a>
         </article>
         <article class="card">
-          <div class="meta">Programmer</div>
-          <h3>Programmer-Wander</h3>
-          <p>Local development shell: files, commands, git, HTTP, transforms, and persistent sessions for real code work.</p>
-          <a class="button" href="https://github.com/AIWander/Programmer-Wander" target="_blank" rel="noopener">Open repo</a>
+          <div class="meta">Optional companion</div>
+          <h3>Voice-Command</h3>
+          <p>Local speech input and speech output for MCP clients. Use it when the demo benefits from spoken command and spoken feedback.</p>
+          <a class="button" href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">Open repo</a>
+        </article>
+        <article class="card">
+          <div class="meta">Optional protocol helper</div>
+          <h3>GrokCLI</h3>
+          <p>Skills and lifecycle hooks for Grok-style agent sessions. It is a protocol layer, not a replacement for the AI-Hands MCP server.</p>
+          <a class="button" href="https://github.com/AIWander/GrokCLI" target="_blank" rel="noopener">Open repo</a>
         </article>
       </div>
     </div>
@@ -402,14 +402,23 @@ footer a { color: var(--muted); }
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Install</div>
-        <h2>Use one install pattern.</h2>
-        <p>Each tool links to its latest Windows x64 release and its source repo. Download the binaries, place them under the same install folder, then add the config block below.</p>
+        <h2>Install AI-Hands first.</h2>
+        <p>Use the signed Windows setup executable as the primary path. Voice-Command and GrokCLI are optional add-ons, not required to understand the product.</p>
       </div>
       <div class="grid">
         <article class="card">
           <div class="meta">Windows x64</div>
+          <h3>AI-Hands</h3>
+          <p>Primary installer for browser control, desktop UI automation, screenshots, vision, and OCR.</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/AIWander/AI-Hands/releases/latest/download/AI-Hands-Setup-x64.exe">Download setup exe</a>
+            <a class="button" href="https://github.com/AIWander/AI-Hands" target="_blank" rel="noopener">Open repo</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="meta">Windows x64</div>
           <h3>Voice-Command</h3>
-          <p>Download the voice MCP binary for local speech input and output.</p>
+          <p>Optional voice layer for local speech input and output during demos.</p>
           <div class="actions">
             <a class="button primary" href="https://github.com/AIWander/Voice-Command/releases/latest/download/voice-mcp-x64.exe">Download exe</a>
             <a class="button" href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">Open repo</a>
@@ -417,28 +426,19 @@ footer a { color: var(--muted); }
         </article>
         <article class="card">
           <div class="meta">Windows x64</div>
-          <h3>AI-Hands</h3>
-          <p>Download the browser, desktop UI, screenshot, vision, and OCR setup executable.</p>
+          <h3>GrokCLI</h3>
+          <p>Optional skills and hooks installer for Grok-style agent sessions.</p>
           <div class="actions">
-            <a class="button primary" href="https://github.com/AIWander/AI-Hands/releases/latest/download/AI-Hands-Setup-x64.exe">Download exe</a>
-            <a class="button" href="https://github.com/AIWander/AI-Hands" target="_blank" rel="noopener">Open repo</a>
-          </div>
-        </article>
-        <article class="card">
-          <div class="meta">Windows x64</div>
-          <h3>Programmer-Wander</h3>
-          <p>Download the local development MCP setup executable for files, shell, git, and HTTP work.</p>
-          <div class="actions">
-            <a class="button primary" href="https://github.com/AIWander/Programmer-Wander/releases/latest/download/Programmer-Wander-Setup-x64.exe">Download exe</a>
-            <a class="button" href="https://github.com/AIWander/Programmer-Wander" target="_blank" rel="noopener">Open repo</a>
+            <a class="button primary" href="https://github.com/AIWander/GrokCLI/releases/latest/download/GrokCLI-Setup.exe">Download setup exe</a>
+            <a class="button" href="https://github.com/AIWander/GrokCLI" target="_blank" rel="noopener">Open repo</a>
           </div>
         </article>
         <article class="card wide">
           <div class="meta">Grok Build config example</div>
-          <h3>Add the tools to Grok Build CLI</h3>
-          <p>After placing the binaries under <code>C:\AIWander\servers</code>, merge this shape into Grok's MCP config and adjust filenames if your install path differs.</p>
+          <h3>Add AI-Hands to Grok Build CLI</h3>
+          <p>After installing AI-Hands, merge this shape into Grok's MCP config and adjust the path if your install folder differs. Add Voice only if you install the optional voice layer.</p>
           <div class="cmd">
-            <code id="cmd-config">[mcp_servers.voice] command = 'C:\AIWander\servers\voice.exe'  [mcp_servers.hands] command = 'C:\AIWander\servers\hands.exe'  [mcp_servers.programmer] command = 'C:\AIWander\servers\programmer.exe'</code>
+            <code id="cmd-config">[mcp_servers.hands] command = 'C:\AIWander\servers\hands.exe'  # optional: [mcp_servers.voice] command = 'C:\AIWander\servers\voice.exe'</code>
             <button class="copy" data-copy="cmd-config">Copy</button>
           </div>
         </article>
@@ -450,14 +450,14 @@ footer a { color: var(--muted); }
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Proof path</div>
-        <h2>The demo should be Grok dogfooding the suite.</h2>
-        <p>The strongest proof is one coherent run inside Grok Build CLI, not four generic product clips.</p>
+        <h2>The demo should be Grok using AI-Hands.</h2>
+        <p>The strongest proof is one coherent run inside Grok Build CLI where the model acts through the UI and verifies the outcome visually.</p>
       </div>
       <div class="steps">
-        <div class="step"><strong>Speak the task.</strong><span>Use Voice-Command to give Grok an instruction without typing.</span></div>
-        <div class="step"><strong>Drive the machine.</strong><span>Use AI-Hands to open a browser or desktop app and verify the result visually.</span></div>
-        <div class="step"><strong>Edit and test code.</strong><span>Use Programmer-Wander to inspect a repo, patch a file, and run a command.</span></div>
-        <div class="step"><strong>Narrate the outcome.</strong><span>Have Grok summarize what changed and what passed.</span></div>
+        <div class="step"><strong>Open the target.</strong><span>Use AI-Hands to launch a browser or desktop app from Grok Build CLI.</span></div>
+        <div class="step"><strong>Act through the UI.</strong><span>Click, type, scroll, and inspect state through the same interface a person would use.</span></div>
+        <div class="step"><strong>Verify visually.</strong><span>Capture screenshots, use OCR or vision, and confirm the requested result is on screen.</span></div>
+        <div class="step"><strong>Report the proof.</strong><span>Have Grok summarize the action, the visible evidence, and what still needs user approval.</span></div>
       </div>
     </div>
   </section>
@@ -467,20 +467,20 @@ footer a { color: var(--muted); }
       <div class="section-head">
         <div class="eyebrow">Resources</div>
         <h2>Open repos and release assets.</h2>
-        <p>Use the source repos for documentation and the release assets for quick Windows setup.</p>
+        <p>Use AI-Hands as the first-contact repo. The companion repos are useful after the core demo is clear.</p>
       </div>
       <div class="resource-list">
-        <div class="resource">
-          <div><b>Voice-Command</b><span>Voice I/O MCP server and public install script.</span></div>
-          <a href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">GitHub</a>
-        </div>
         <div class="resource">
           <div><b>AI-Hands</b><span>Browser, UI automation, vision, and OCR MCP server.</span></div>
           <a href="https://github.com/AIWander/AI-Hands" target="_blank" rel="noopener">GitHub</a>
         </div>
         <div class="resource">
-          <div><b>Programmer-Wander</b><span>Local development shell MCP server.</span></div>
-          <a href="https://github.com/AIWander/Programmer-Wander" target="_blank" rel="noopener">GitHub</a>
+          <div><b>Voice-Command</b><span>Optional voice I/O MCP server for spoken demos.</span></div>
+          <a href="https://github.com/AIWander/Voice-Command" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div class="resource">
+          <div><b>GrokCLI</b><span>Optional skills and lifecycle hooks for Grok-style sessions.</span></div>
+          <a href="https://github.com/AIWander/GrokCLI" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
       <p class="note" style="margin-top:22px">Record one complete Grok dogfood demo and link it here when the run is ready to share.</p>
