@@ -1,0 +1,21 @@
+# AIWander - Autonomous
+
+> Autonomous is CPC local persistent knowledge and control engine. It gives supported AI clients a durable way to recall context, navigate private knowledge, preserve continuity, and carry out governed operations on the user own machine.
+
+- Publisher: AIWander
+- Platform: Windows
+- Availability: source package. No executable is currently bundled.
+- Pricing: not published
+
+## What this page is
+- [aiwander.ai](https://aiwander.ai) currently documents Autonomous specifically, not the full AIWander portfolio.
+
+## Other AIWander products with their own sites
+- [AI-Hands](https://aihands.ai) - Windows MCP server for browser, desktop, vision, and OCR. Portable binary available.
+- [AI Programmer](https://aiprogrammer.ai) - Windows dev shell MCP server.
+- [AI Voice MCP](https://aivoicemcp.com) - voice control for MCP agents.
+
+## Notes
+- Installation is not the same thing as a ready runtime, an invoked hook, or proven enforcement.
+- Hooks are not enforcement until trusted and real-event tested.
+- No user data is bundled.
